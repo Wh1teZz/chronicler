@@ -1,4 +1,9 @@
 Lib/
 Scripts/
 Include/
+bin/
+include/
+lib/
+lib64
+share/
 *.cfg
