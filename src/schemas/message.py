@@ -11,13 +11,14 @@ class Message(Base):
     content = Column(String)
     day = Column(Integer)
     nomination = Column(Boolean)
-    toPlayer = Column(Integer, ForeignKey('player.id'))
+    toPlayerName = Column(String)
+    fromPlayerID = Column(Integer, ForeignKey('player.id'))
     fromPlayer = relationship("Player", back_populates="messages")
 
-    def __init__(self, fromPlayer: Player, toPlayer: Player, content: str, day: int, nomination=False):
+    def __init__(self, fromPlayer: Player, toPlayerName, content: str, day: int, nomination=False):
         self.content = content
         self.day = day
         self.fromPlayer = fromPlayer
-        self.toPlayer = toPlayer
+        self.toPlayerName = toPlayerName
         self.nomination = nomination
         

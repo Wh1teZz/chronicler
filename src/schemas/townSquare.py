@@ -1,12 +1,12 @@
-from sqlalchemy import Column, String, Date, Integer, Numeric
+from sqlalchemy import Column, Integer
 from sqlalchemy.orm import relationship
 from schemas.base import Base
 
 class TownSquare(Base):
-    __tablename__ = 'TownSquare'
+    __tablename__ = 'townsquare'
     
     id = Column(Integer, primary_key=True)
-    players = relationship("Player", back_populates="TownSquare")
+    players = relationship("Player", back_populates="townsquare")
     day = Column(Integer)
 
     def __init__(self, day=1):

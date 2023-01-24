@@ -17,14 +17,20 @@ def getPlayerByName(name: str) -> Player:
 
 def getMessagesFromPlayer(name: str) -> list[Message]:
     session = session_factory()
-    player = session.query(Player).filter(Player.name == name).first()
+    player = getPlayerByName(name)
     messages = session.query(Message).filter(Message.fromPlayer == player).all()
     session.close()
     return messages
 
-def message(fromPlayer: Player, toPlayer: Player, content, day, nomination=False) -> None:
+def getMessagesToPlayer(name: str) -> list[Message]:
     session = session_factory()
-    session.add(Message(fromPlayer, toPlayer, content, day, nomination))
+    messages = session.query(Message).filter(Message.toPlayerName == name).all()
+    session.close()
+    return messages
+
+def message(fromPlayer: Player, toPlayerName: str, content: str, day: int, nomination=False) -> None:
+    session = session_factory()
+    session.add(Message(fromPlayer, toPlayerName, content, day, nomination))
     session.commit()
     session.close()
 
