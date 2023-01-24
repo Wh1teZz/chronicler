@@ -18,7 +18,7 @@ async def on_message(message):
     user_message = str(message.content)
     channel = str(message.channel.name)
 
-    print (f'{username} sent: {user_message}')
+    print (f'{username} sent: {user_message}\nin the channel {channel}')
 
     if username == "JZT":
         await message.channel.send(f'Hello world!')
