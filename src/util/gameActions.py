@@ -25,6 +25,18 @@ def addChannels(channels: list) -> bool:
     session.close()
     return True
 
+def getAllChannels() -> list[Channel]:
+    session = session_factory()
+    channels = session.query(Channel).all()
+    session.close()
+    return channels
+
+def isChannel(channelName) -> bool:
+    session = session_factory()
+    channel = session.query(Channel).filter(Channel.channelName == channelName).first()
+    session.close()
+    return True if channel else False
+
 def initTownSquare(name: str, reportChannel: str) -> bool:
     session = session_factory()
 
@@ -34,6 +46,42 @@ def initTownSquare(name: str, reportChannel: str) -> bool:
         return False
 
     session.add(TownSquare(name, reportChannel))
+    session.commit()
+    session.close()
+    return True
+
+def getTownSquare() -> TownSquare:
+    session = session_factory()
+    ts = session.query(TownSquare).first()
+    session.close()
+    return ts
+
+def prevDay() -> int:
+    session = session_factory()
+    ts = session.query(TownSquare).first()
+    ts.day -= 1
+    day = ts.day
+    session.add(ts)
+    session.commit()
+    session.close()
+    return day
+
+def nextDay() -> int:
+    session = session_factory()
+    ts = session.query(TownSquare).first()
+    ts.day += 1
+    day = ts.day
+    session.add(ts)
+    session.commit()
+    session.close()
+    return day
+
+def deleteTownSquare() -> bool:
+    session = session_factory()
+    ts = session.query(TownSquare).first()
+    if ts == None:
+        return False
+    session.delete(ts)
     session.commit()
     session.close()
     return True
