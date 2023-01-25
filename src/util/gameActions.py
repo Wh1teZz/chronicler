@@ -1,6 +1,7 @@
 from schemas.player import Player
 from schemas.channel import Channel
 from schemas.townSquare import TownSquare
+from schemas.message import Message
 from schemas.base import session_factory
 
 def addPlayers(names: list) -> bool:
@@ -76,12 +77,20 @@ def nextDay() -> int:
     session.close()
     return day
 
-def deleteTownSquare() -> bool:
+def resetGame() -> bool:
     session = session_factory()
-    ts = session.query(TownSquare).first()
-    if ts == None:
-        return False
-    session.delete(ts)
+    ts = session.query(TownSquare).all()
+    for x in ts:
+        session.delete(x)
+    m = session.query(Message).all()
+    for x in m:
+        session.delete(x)
+    p = session.query(Player).all()
+    for x in p:
+        session.delete(x)
+    c = session.query(Channel).all()
+    for x in c:
+        session.delete(x)
     session.commit()
     session.close()
     return True

@@ -14,7 +14,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    username = str(message.author).split('#')[0]
+    username = str(message.author)
     user_message = str(message.content)
     channel = str(message.channel.name)
 

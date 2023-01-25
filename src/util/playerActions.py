@@ -4,6 +4,12 @@ from schemas.base import session_factory
 from util.config import *
 from random import randint, choices
 
+def getAllPlayers() -> list[Player]:
+    session = session_factory()
+    players = session.query(Player).all()
+    session.close()
+    return players
+
 def getPlayerByName(name: str) -> Player:
     session = session_factory()
     player = session.query(Player).filter(Player.name == name).first()
@@ -94,3 +100,8 @@ def message(fromPlayerName: str, toPlayerName: str, content: str, day: int, nomi
     session.commit()
     session.close()
 
+def getAllMessages() -> list[Message]:
+    session = session_factory()
+    messages = session.query(Message).all()
+    session.close()
+    return messages
