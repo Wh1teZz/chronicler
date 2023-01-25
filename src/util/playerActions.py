@@ -1,7 +1,7 @@
 from schemas.message import Message
 from schemas.player import Player
 from schemas.base import session_factory
-from config import *
+from util.config import *
 from random import randint, choices
 
 def getPlayerByName(name: str) -> Player:
@@ -82,12 +82,13 @@ def generatePublicInfo(content, volume, fromPlayerName, toPlayerName, day) -> st
         return f'{fromPlayerName} has conversed with {toPlayerName} on day {day}. They talked about "{k0}", "{k1}" and "{k2}. {fromPlayerName} has sent {nMessagesToPlayer} messages to {toPlayerName} this game.'
 
 
-def calculateVolume(player: Player) -> int:
-    return player.messagesSent + (player.charSent // 100)
+def calculateVolume(messagesSent: int, charSent: int) -> int:
+    return messagesSent + (charSent // 50)
 
-def message(fromPlayer: Player, toPlayerName: str, content: str, day: int, nomination=False) -> None:
+def message(fromPlayerName: str, toPlayerName: str, content: str, day: int, nomination=False) -> None:
     session = session_factory()
-    volume = calculateVolume(fromPlayer)
+    fromPlayer = getPlayerByName(fromPlayerName)
+    volume = calculateVolume(fromPlayer.messagesSent, fromPlayer.charSent)
     publicInfo = generatePublicInfo(content, volume, fromPlayer.name, toPlayerName, day)
     session.add(Message(fromPlayer, toPlayerName, content, publicInfo, day, nomination))
     session.commit()
