@@ -1,4 +1,4 @@
-from utils.actions import *
+from util.actions import *
 
 if __name__ == "__main__":
     addPlayers(["JZT", "Arky"])
