@@ -4,13 +4,6 @@ from schemas.base import session_factory
 from config import *
 from random import randint, choices
 
-def addPlayers(names: list) -> None:
-    session = session_factory()
-    for name in names:
-        session.add(Player(name, 0, 0, 0, 0))
-    session.commit()
-    session.close()
-
 def getPlayerByName(name: str) -> Player:
     session = session_factory()
     player = session.query(Player).filter(Player.name == name).first()

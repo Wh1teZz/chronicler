@@ -1,4 +1,5 @@
-from util.actions import *
+from util.playerActions import *
+from util.gameActions import *
 
 if __name__ == "__main__":
     addPlayers(["JZT", "Arky"])
